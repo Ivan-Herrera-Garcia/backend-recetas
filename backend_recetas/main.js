@@ -15,7 +15,7 @@ await client.connect({
     ],
   credential: {
     username: "user",  // Usuario de MongoDB
-    password: Deno.env.get("PASSWORD"),  // Contraseña de MongoDB
+    password: `${Deno.env.get("PASSWORD")}`,  // Contraseña de MongoDB
     db: "admin",
     mechanism: Deno.env.get("MECHANISM"),  // Mecanismo de autenticación
   },
