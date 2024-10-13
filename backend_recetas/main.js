@@ -1,27 +1,30 @@
 import { Application, Router } from "https://deno.land/x/oak@v17.1.0/mod.ts";
 import { MongoClient } from "https://deno.land/x/mongo@v0.31.1/mod.ts";
+import { config } from "https://deno.land/x/dotenv@v3.2.0/mod.ts";
+
+const env = config();
 
 // Configuración de conexión a MongoDB Atlas manualmente
 const client = new MongoClient();
 await client.connect({
-  db: "HextechIt",  // Nombre de la base de datos
+  db: env.DB,  // Nombre de la base de datos
   tls: true,
   servers: [
         {
-        host: "hextechit-shard-00-02.nxlay.mongodb.net",
+        host: env.HOST,  // Host de MongoDB
         port: 27017,
         },
     ],
   credential: {
     username: "user",  // Usuario de MongoDB
-    password: "contrasena123",  // Reemplaza <db_password> con tu contraseña
+    password: env.PASSWORD,  // Contraseña de MongoDB
     db: "admin",
-    mechanism: "SCRAM-SHA-1",
+    mechanism: env.MECHANISM,  // Mecanismo de autenticación
   },
 });
 
-const db = client.database("nombreBaseDatos");
-const recetasCollection = db.collection("recetas");
+const db = client.database(env.DATABASE);
+const recetasCollection = db.collection(env.TABLE);
 
 const app = new Application();
 const router = new Router();
