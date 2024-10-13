@@ -1,6 +1,13 @@
 import { Application, Router } from "https://deno.land/x/oak@v17.1.0/mod.ts";
 import { MongoClient } from "https://deno.land/x/mongo@v0.31.1/mod.ts";
 
+console.log("Iniciando servidor de recetas");
+console.log(Deno.env.get("DB"));
+console.log(Deno.env.get("HOST"));
+console.log(Deno.env.get("PASSWORD"));
+console.log(Deno.env.get("MECHANISM"));
+console.log(Deno.env.get("DATABASE"));
+console.log(Deno.env.get("TABLE"));
 
 // Configuración de conexión a MongoDB Atlas manualmente
 const client = new MongoClient();
