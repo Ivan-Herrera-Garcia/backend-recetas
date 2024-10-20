@@ -29,14 +29,31 @@ const router = new Router();
 // Endpoint GET con paginación de recetas
 router.get("/recetas", async (context) => {
     console.log("Petición recibida para /recetas");
-    const page = parseInt(context.request.url.searchParams.get("page") || "1");
+    try {
+      const page = parseInt(context.request.url.searchParams.get("page") || "1");
     const limit = 10;
     const skip = (page - 1) * limit;
   
     const recetas = await recetasCollection.find({}, { skip, limit }).toArray();
     
     console.log(`Retornando ${recetas.length} recetas`);
-    context.response.body = recetas;
+    context.response.body = recetas; 
+    } catch (error) {
+      context.response.body = "Servicio no disponible";
+    }
+});
+
+// Endpoint GET con paginación de recetas
+router.get("/recetas/:id", async (context) => {
+  console.log("Petición recibida para /recetas/:id");
+  try {
+    const id = context.params.id;
+    const receta = await recetasCollection.findOne({ _id: { $oid: id } });
+    
+    context.response.body = receta;
+  } catch (error) {
+    context.response.body = "Receta no encontrada";
+  }
 });
 
 router.get("/", (context) => {
