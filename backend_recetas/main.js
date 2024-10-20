@@ -48,10 +48,12 @@ router.get("/recetas/:id", async (context) => {
   console.log("Petición recibida para /recetas/:id");
   try {
     const id = context.params.id;
+    console.log(`Buscando receta con id ${id}`);
     const receta = await recetasCollection.findOne({ _id: id });
     
     context.response.body = receta;
   } catch (error) {
+    console.log(error.message);
     context.response.body = "Receta no encontrada";
   }
 });
